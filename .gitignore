@@ -1,0 +1,24 @@
+*
+!*/
+
+# C files
+!*.c
+!*.h
+
+# Make files
+!Makefile
+!Makefile.*
+!*.mk
+
+# Documentation files
+!README*
+!CREDITS*
+!AUTHORS*
+!LICENSE*
+
+# Miscellaneous files
+!.git*
+
+# Make sure the 'Build' is ignored, even though it might contain files that were
+#  'whitelisted' above.
+Build/
