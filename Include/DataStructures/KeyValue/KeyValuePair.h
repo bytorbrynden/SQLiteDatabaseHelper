@@ -39,15 +39,21 @@ struct keyValuePair  // Definition
 //  new instance of the 'keyValuePair' struct.
 typedef struct keyValuePair KeyValuePair;
 
+// The 'createKeyValuePair()' function acts as a constructor for the
+//  'keyValuePair' struct. It is tasked with allocating any memory that is
+//  required for a Key-Value Pair.
 KeyValuePair *createKeyValuePair
 (
-    const char *pKey,
-    void *pValue
+    const char *pKey, // IN: The key for the new pair.
+    void *pValue      // IN: A pointer to the value for the new pair.
 );
 
+// The 'destroyKeyValuePair()' function acts as the destructor for the
+//  'keyValuePair' struct. It attempts to deallocate all of the memory that was
+//  allocated for use with the Key-Value pair.
 void destroyKeyValuePair
 (
-    KeyValuePair *pPair
+    KeyValuePair *pPair // IN: A pointer to the Key-Value pair to be destroyed.
 );
 
 #endif
