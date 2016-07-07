@@ -43,33 +43,31 @@ LIB_HEADERS := $(patsubst ${_LIB}/%.h, ${_BIN}/Include/%.h, ${HEADERS})
 all: prepare clean objects archive
 
 prepare:
-	if [ ! -d ${_OUT} ]; then ${MD} ${MD_FLAGS} ${_OUT}; fi
-	if [ ! -d ${_OBJ} ]; then ${MD} ${MD_FLAGS} ${_OBJ}; fi
-	if [ ! -d ${_BIN} ]; then ${MD} ${MD_FLAGS} ${_BIN}; fi
+	@if [ ! -d ${_OUT} ]; then ${MD} ${MD_FLAGS} ${_OUT}; fi
+	@if [ ! -d ${_OBJ} ]; then ${MD} ${MD_FLAGS} ${_OBJ}; fi
+	@if [ ! -d ${_BIN} ]; then ${MD} ${MD_FLAGS} ${_BIN}; fi
 
 clean:
-	${RM} ${RM_FLAGS} ${_OBJ}/*
-	${RM} ${RM_FLAGS} ${_BIN}/*
+	@${RM} ${RM_FLAGS} ${_OBJ}/*
+	@${RM} ${RM_FLAGS} ${_BIN}/*
 
 objects: ${OBJS} ${LIB_OBJS}
 
-archive:
-	${AR} ${AR_FLAGS} ${TARGET} $(shell find ${_OBJ} -type f -name "*.o")
-	make ${SRC_HEADERS}
-	make ${LIB_HEADERS}
+archive: ${SRC_HEADERS} ${LIB_HEADERS}
+	@${AR} ${AR_FLAGS} ${TARGET} $(shell find ${_OBJ} -type f -name "*.o")
 
 ${_OBJ}/srcs/%.o: ${_SRC}/%.c
-	${MD} ${MD_FLAGS} $(dir $@)
-	${CC} ${CC_FLAGS} $^ -o $@
+	@${MD} ${MD_FLAGS} $(dir $@)
+	@${CC} ${CC_FLAGS} $^ -o $@
 
 ${_OBJ}/libs/%.o: ${_LIB}/%.c
-	${MD} ${MD_FLAGS} $(dir $@)
-	${CC} ${CC_FLAGS} $^ -o $@
+	@${MD} ${MD_FLAGS} $(dir $@)
+	@${CC} ${CC_FLAGS} $^ -o $@
 
 ${_BIN}/Include/%.h: ${_INC}/%.h
-	${MD} ${MD_FLAGS} $(dir $@)
-	${CP} ${CP_FLAGS} $^ $@
+	@${MD} ${MD_FLAGS} $(dir $@)
+	@${CP} ${CP_FLAGS} $^ $@
 
 ${_BIN}/Include/%.h: ${_LIB}/%.h
-	${MD} ${MD_FLAGS} $(dir $@)
-	${CP} ${CP_FLAGS} $^ $@
+	@${MD} ${MD_FLAGS} $(dir $@)
+	@${CP} ${CP_FLAGS} $^ $@
