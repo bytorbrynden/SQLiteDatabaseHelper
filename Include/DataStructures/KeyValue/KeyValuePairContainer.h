@@ -29,6 +29,12 @@
 // The total number of Key-Value Pairs that're stored in an instance of the
 //  'keyValuePairContainer' struct, will be recorded in the 'numberOfPairs'
 //  attribute.
+//
+// TODO: Function to create and add a new Key-Value pair
+// TODO: Function to check to see if a Key-Value pair exists with desired key
+// TODO: Function to get the value from a Key-Value pair with a certain key
+// TODO: Function to get a list of all of the keys in the container
+// TODO: Function to make sure a key is unique
 struct keyValuePairContainer; // Forward-Declaration
 struct keyValuePairContainer  // Definition
 {
