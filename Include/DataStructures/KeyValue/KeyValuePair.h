@@ -45,7 +45,8 @@ typedef struct keyValuePair KeyValuePair;
 KeyValuePair *createKeyValuePair
 (
     const char *pKey, // IN: The key for the new pair.
-    void *pValue      // IN: A pointer to the value for the new pair.
+    void *pValue,     // IN: A pointer to the value for the new pair.
+    size_t valueSize  // IN: The size of the pair's value.
 );
 
 // The 'destroyKeyValuePair()' function acts as the destructor for the
