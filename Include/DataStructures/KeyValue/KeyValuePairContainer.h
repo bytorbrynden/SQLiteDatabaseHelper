@@ -25,9 +25,14 @@
 //  type (see 'DataStructures/KeyValue/KeyValuePair.h'). The aforementioned
 //  array will be accessible via the 'ppKeyValuePairs' attribute contained
 //  within the 'keyValuePairContainer' struct.
+//
+// The total number of Key-Value Pairs that're stored in an instance of the
+//  'keyValuePairContainer' struct, will be recorded in the 'numberOfPairs'
+//  attribute.
 struct keyValuePairContainer; // Forward-Declaration
 struct keyValuePairContainer  // Definition
 {
+    int numberOfPairs;
     KeyValuePair **ppKeyValuePairs;
 };
 
@@ -40,7 +45,7 @@ KVPContainer *createKVPContainer();
 
 void destroyKVPContainer
 (
-    KVPContainer *pContainer
+    KVPContainer *pContainer // IN: The Key-Value Pair container to be destroyed.
 );
 
 #endif
