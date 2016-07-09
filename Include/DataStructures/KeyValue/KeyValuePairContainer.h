@@ -27,15 +27,6 @@
 // The 'keyValuePairContainer' struct will be used to store each of the KVPs,
 //  as well as pointers to functions to help "maintain" said KVPs.
 //
-// KVPs will be represented using an array of pointers to the 'KeyValuePair'
-//  type (see 'DataStructures/KeyValue/KeyValuePair.h'). The aforementioned
-//  array will be accessible via the 'ppKeyValuePairs' attribute contained
-//  within the 'keyValuePairContainer' struct.
-//
-// The total number of Key-Value Pairs that're stored in an instance of the
-//  'keyValuePairContainer' struct, will be recorded in the 'numberOfPairs'
-//  attribute.
-//
 // TODO: Function to create and add a new Key-Value pair
 // TODO: Function to check to see if a Key-Value pair exists with desired key
 // TODO: Function to get the value from a Key-Value pair with a certain key
@@ -44,7 +35,12 @@
 struct keyValuePairContainer; // Forward-Declaration
 struct keyValuePairContainer  // Definition
 {
+    // The total number of Key-Value Pairs that're stored in an instance of the
+    //  'keyValuePairContainer' struct.
     int numberOfPairs;
+    
+    // KVPs will be represented using an array of pointers to the 'KeyValuePair'
+    //  type (see 'DataStructures/KeyValue/KeyValuePair.h').
     KeyValuePair **ppKeyValuePairs;
     
     int (*add)
