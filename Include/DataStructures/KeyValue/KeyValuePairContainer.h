@@ -8,8 +8,14 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "DataStructures/KeyValue/KeyValuePair.h"
+
+#define KEY_VALUE_PAIR_OK        0x0
+#define KEY_VALUE_PAIR_ERROR     0x1
+#define KEY_VALUE_PAIR_EXISTS    0x2
+#define KEY_VALUE_PAIR_NOT_FOUND 0x3
 
 // A Key-Value Pair (KVP) container will be represented as a pointer to an
 //  instance of the 'keyValuePairContainer' struct.
@@ -40,6 +46,20 @@ struct keyValuePairContainer  // Definition
 {
     int numberOfPairs;
     KeyValuePair **ppKeyValuePairs;
+    
+    int (*add)
+    (
+        struct keyValuePairContainer *pContainer,
+        const char *pKey,
+        void *pValue,
+        size_t valueSize
+    );
+    
+    KeyValuePair *(*get)
+    (
+        struct keyValuePairContainer *pContainer,
+        const char *pKey
+    );
 };
 
 // To remove some of the overhead involved in declaring a new instance of the
@@ -51,7 +71,21 @@ KVPContainer *createKVPContainer();
 
 void destroyKVPContainer
 (
-    KVPContainer *pContainer // IN: The Key-Value Pair container to be destroyed.
+    KVPContainer *pContainer // IN: The Key-Value Pair container to be destroyed
+);
+
+int keyValuePairContainer_add
+(
+    KVPContainer *pContainer,
+    const char *pKey, // IN: The Key-Value Pair's key
+    void *pValue,     // IN: Pointer to the Key-Value Pair's value
+    size_t valueSize  // IN: The size (in bytes) of the Key-Value Pair's value
+);
+
+KeyValuePair *keyValuePairContainer_get
+(
+    KVPContainer *pContainer,
+    const char *pKey // IN: The key of the desired Key-Value Pair
 );
 
 #endif
