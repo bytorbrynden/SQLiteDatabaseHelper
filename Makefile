@@ -11,7 +11,7 @@ _OUT := ${ROOT}/Build
 _OBJ := ${_OUT}/obj
 _BIN := ${_OUT}/bin
 
-TARGET := ${_BIN}/${NAME}.a
+TARGET := ${_BIN}/lib${NAME}.a
 
 MD := mkdir
 MD_FLAGS := -p
