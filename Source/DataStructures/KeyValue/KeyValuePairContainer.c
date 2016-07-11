@@ -55,7 +55,7 @@ int keyValuePairContainer_add
         return KEY_VALUE_PAIR_ERROR;
     
     // Check to make sure a pair with the specified key doesn't already exist
-    if (NULL != pContainer->get(pContainer, pKey))
+    if (false == pContainer->hasKey(pContainer, pKey))
         return KEY_VALUE_PAIR_EXISTS;
     
     // Increase the size of the array of Key-Value Pairs
@@ -82,6 +82,9 @@ KeyValuePair *keyValuePairContainer_get
 )
 {
     if (NULL == pContainer || NULL == pKey)
+        return NULL;
+    
+    if (false == pContainer->hasKey(pContainer, pKey))
         return NULL;
     
     for (int pairIndex = 0; pairIndex < pContainer->numberOfPairs; ++pairIndex)
@@ -115,4 +118,24 @@ char **keyValuePairContainer_list
     }
     
     return ppPairKeys;
+}
+
+bool keyValuePairContainer_hasKey
+(
+    KVPContainer *pContainer,
+    const char *pKey
+)
+{
+    if (NULL == pContainer)
+        return false;
+    
+    for (int pairIndex = 0; pairIndex < pContainer->numberOfPairs; ++pairIndex)
+    {
+        KeyValuePair *pCurrentPair = *(pContainer->ppKeyValuePairs + pairIndex);
+        
+        if (!strncmp(pKey, pCurrentPair->pKey, strlen(pKey)))
+            return true;
+    }
+    
+    return false;
 }

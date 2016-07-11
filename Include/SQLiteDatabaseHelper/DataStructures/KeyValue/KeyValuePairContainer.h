@@ -26,8 +26,6 @@
 //
 // The 'keyValuePairContainer' struct will be used to store each of the KVPs,
 //  as well as pointers to functions to help "maintain" said KVPs.
-//
-// TODO: Function to make sure a key is unique
 struct keyValuePairContainer; // Forward-Declaration
 struct keyValuePairContainer  // Definition
 {
@@ -56,6 +54,12 @@ struct keyValuePairContainer  // Definition
     char **(*list)
     (
         struct keyValuePairContainer *pContainer
+    );
+    
+    bool (*hasKey)
+    (
+        struct keyValuePairContainer *pContainer,
+        const char *pKey
     );
 };
 
@@ -88,6 +92,12 @@ KeyValuePair *keyValuePairContainer_get
 char **keyValuePairContainer_list
 (
     KVPContainer *pContainer
+);
+
+bool keyValuePairContainer_hasKey
+(
+    KVPContainer *pContainer,
+    const char *pKey
 );
 
 #endif
