@@ -1,0 +1,127 @@
+Static Library header search paths and "consumer" project header search paths
+
+Greetings, I am currently in the process of refactoring/rewriting a SQLite
+database helper that I helped write a few months ago.
+
+While rewriting the helper, I decided to turn it into a static library, as
+that'll make it a bit easier for me to reuse on the other platforms it was
+originally designed for (desktop, mobile).
+
+In short, the problem I'm having, is with the `#include` directives in my static
+library (more details below), but only once the static library has been
+"included" (not in the form of a `#include` directive) in a "consumer project".
+
+Currently, the consumer project is just a project that contains some functions
+to test the functionality of the database helper. I'll touch more on this later.
+
+When compiling the static library, I use the following flags (expressed in the
+form of Makefile macros):
+
+    CC_FLAGS := -Wall -Werror -ggdb -I${_INC} -I${_LIB}
+
+The `${_INC}` and `${_LIB}` macros are defined as follows:
+
+    ROOT := ${CURDIR}
+    _INC := ${ROOT}/Include
+    _LIB := ${ROOT}/Libraries
+
+The directory pointed to by the `${_INC}` macro, contains all of the headers for
+for my static library. At the time of writing, its tree looked as follows:
+
+    $ tree Include/
+    Include
+    ├── DataStructures
+    │   └── KeyValue
+    │       ├── KeyValuePair.h
+    │       └── KeyValuePairContainer.h
+    ├── Operations
+    │   └── Read
+    └── SQLiteDatabaseHelper.h
+
+The directory pointed to by the `${_LIB}` macro, is a directory that contains a
+subdirectory for each library that is to be compiled alongside my library.
+Present under each library directory, are each of the interface (`*.h`) and
+implementation (`*.c`) files for said library.
+
+An example of this structure, can be seen below:
+
+    $ tree Libraries/
+    Libraries
+    └── sqlite3
+        ├── sqlite3.c
+        └── sqlite3.h
+
+After the static library has been compiled, its archive (`*.a`) file as well as
+its headers, are placed in a bin directory (in my case, pointed to by a
+`${_BIN}` macro).
+
+The contents of the bin directory, are what would be copied into a consumer
+project later on. In my case, I'll be copying the contents of the bin directory,
+to their respective locations in my test project.
+
+The test project follows a similar structure to that of the static library
+project;
+
+    $ tree
+    ├── Build
+    │   ├── bin
+    │   └── obj
+    ├── Include
+    ├── Libraries
+    │   └── SQLiteDatabaseHelper
+    ├── Makefile
+    └── Source
+
+Again, the `${_INC}` macro points to the `Include/` directory, and the `${_LIB}`
+macro points to the `Libraries/` directory.
+
+As with the static library project, the `Include/` directory contains
+project-specific headers, while the `Libraries/` directory contains any
+libraries that are to be linked with the project.
+
+The contents of the bin directory that was mentioned earlier, will be copied
+into the `Libraries/SQLiteDatabaseHelper` directory.
+
+When compiling the test project, the following flags are passed to gcc (again,
+in the form of Makefile macros):
+
+    CC_FLAGS := -Wall -Werror -ggdb -I${_INC} -I${_LIB}
+    LD_FLAGS := -L${_LIB}/SQLiteDatabaseHelper/ -lsqlitedatabasehelper
+
+The problem that I'm having, stems from the fact that the `#include` directives
+found within my static library's headers, uses paths that are specific to that
+of the static library project.
+
+Take for example, the following `#include` directive found within one of my
+static library's headers (in file `SQLiteDatabaseHelper.h`):
+
+    #include "DataStructures/KeyValue/KeyValuePairContainer.h"
+
+That path is perfectly valid for the structure of the static library project,
+however, in the test project, to include that file, the following would be
+written:
+
+    #include "SQLiteDatabaseHelper/DataStructures/KeyValue/KeyValuePairContainer.h"
+
+There is no problem at all if I include one of my library's headers, so long as
+that header doesn't attempt to include another one of the library's headers.
+
+What I'm trying to achieve, is the ability to include library headers using the
+"{LIBRARY}/{PATH_TO_HEADER}" format, as demonstrated above.
+
+As of this moment, I can only think of two actions to resolve this problem:
+
+ 1: Rewrite all `#include` directives in the static library to use the
+ "{LIBRARY}/{PATH_TO_HEADER}" format.
+
+ 2: Change the header search paths in the test project, to search the
+ `Libraries/SQLiteDatabaseHelper` directory for headers.
+
+Neither of the options listed would be my first choice, as, while they would
+work, they seem like they're really just sweeping the issue under the rug.
+
+Any advice would be greatly appreciated.
+
+Best Regards,
+
+Brynden
