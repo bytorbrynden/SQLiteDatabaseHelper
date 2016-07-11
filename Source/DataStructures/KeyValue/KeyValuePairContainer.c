@@ -15,8 +15,9 @@ KVPContainer *createKVPContainer()
     pContainer->numberOfPairs   = 0;
     pContainer->ppKeyValuePairs = (KeyValuePair **) malloc(0);
     
-    pContainer->add = keyValuePairContainer_add;
-    pContainer->get = keyValuePairContainer_get;
+    pContainer->add  = keyValuePairContainer_add;
+    pContainer->get  = keyValuePairContainer_get;
+    pContainer->list = keyValuePairContainer_list;
     
     return pContainer;
 }
@@ -92,4 +93,26 @@ KeyValuePair *keyValuePairContainer_get
     }
     
     return NULL;
+}
+
+char **keyValuePairContainer_list
+(
+    KVPContainer *pContainer
+)
+{
+    char **ppPairKeys = NULL;
+    
+    if (NULL == pContainer)
+        return NULL;
+    
+    ppPairKeys = (char **) malloc(sizeof(char *) * pContainer->numberOfPairs);
+    
+    for (int pairIndex = 0; pairIndex < pContainer->numberOfPairs; ++pairIndex)
+    {
+        KeyValuePair *pCurrentPair = *(pContainer->ppKeyValuePairs);
+        
+        *(ppPairKeys + pairIndex) = (char *) pCurrentPair->pKey;
+    }
+    
+    return ppPairKeys;
 }
