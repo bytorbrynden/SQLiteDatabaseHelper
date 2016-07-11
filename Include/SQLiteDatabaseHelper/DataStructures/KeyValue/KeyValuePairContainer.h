@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#include "DataStructures/KeyValue/KeyValuePair.h"
+#include <SQLiteDatabaseHelper/DataStructures/KeyValue/KeyValuePair.h>
 
 #define KEY_VALUE_PAIR_OK        0x0
 #define KEY_VALUE_PAIR_ERROR     0x1
@@ -28,7 +28,6 @@
 //  as well as pointers to functions to help "maintain" said KVPs.
 //
 // TODO: Function to create and add a new Key-Value pair
-// TODO: Function to check to see if a Key-Value pair exists with desired key
 // TODO: Function to get the value from a Key-Value pair with a certain key
 // TODO: Function to get a list of all of the keys in the container
 // TODO: Function to make sure a key is unique
