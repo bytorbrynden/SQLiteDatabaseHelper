@@ -27,8 +27,6 @@
 // The 'keyValuePairContainer' struct will be used to store each of the KVPs,
 //  as well as pointers to functions to help "maintain" said KVPs.
 //
-// TODO: Function to create and add a new Key-Value pair
-// TODO: Function to get the value from a Key-Value pair with a certain key
 // TODO: Function to get a list of all of the keys in the container
 // TODO: Function to make sure a key is unique
 struct keyValuePairContainer; // Forward-Declaration
