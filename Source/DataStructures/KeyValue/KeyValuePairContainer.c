@@ -15,9 +15,10 @@ KVPContainer *createKVPContainer()
     pContainer->numberOfPairs   = 0;
     pContainer->ppKeyValuePairs = (KeyValuePair **) malloc(0);
     
-    pContainer->add  = keyValuePairContainer_add;
-    pContainer->get  = keyValuePairContainer_get;
-    pContainer->list = keyValuePairContainer_list;
+    pContainer->add    = keyValuePairContainer_add;
+    pContainer->get    = keyValuePairContainer_get;
+    pContainer->list   = keyValuePairContainer_list;
+    pContainer->hasKey = keyValuePairContainer_hasKey;
     
     return pContainer;
 }
@@ -55,7 +56,7 @@ int keyValuePairContainer_add
         return KEY_VALUE_PAIR_ERROR;
     
     // Check to make sure a pair with the specified key doesn't already exist
-    if (false == pContainer->hasKey(pContainer, pKey))
+    if (pContainer->hasKey(pContainer, pKey))
         return KEY_VALUE_PAIR_EXISTS;
     
     // Increase the size of the array of Key-Value Pairs
