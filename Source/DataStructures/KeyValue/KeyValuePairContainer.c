@@ -2,7 +2,7 @@
 // SQLiteDatabaseHelper
 // Source/DataStructures/KeyValue/KeyValuePairContainer.c
 //
-#include "DataStructures/KeyValue/KeyValuePairContainer.h"
+#include <SQLiteDatabaseHelper/DataStructures/KeyValue/KeyValuePairContainer.h>
 
 KVPContainer *createKVPContainer()
 {
@@ -14,6 +14,9 @@ KVPContainer *createKVPContainer()
     
     pContainer->numberOfPairs   = 0;
     pContainer->ppKeyValuePairs = (KeyValuePair **) malloc(0);
+    
+    pContainer->add = keyValuePairContainer_add;
+    pContainer->get = keyValuePairContainer_get;
     
     return pContainer;
 }
@@ -37,4 +40,56 @@ void destroyKVPContainer
     }
     
     free(pContainer);
+}
+
+int keyValuePairContainer_add
+(
+    KVPContainer *pContainer,
+    const char *pKey,
+    void *pValue,
+    size_t valueSize
+)
+{
+    if (NULL == pContainer || NULL == pKey || NULL == pValue)
+        return KEY_VALUE_PAIR_ERROR;
+    
+    // Check to make sure a pair with the specified key doesn't already exist
+    if (NULL != pContainer->get(pContainer, pKey))
+        return KEY_VALUE_PAIR_EXISTS;
+    
+    // Increase the size of the array of Key-Value Pairs
+    pContainer->ppKeyValuePairs = (KeyValuePair **) realloc(
+        pContainer->ppKeyValuePairs,
+        (sizeof(KeyValuePair) * (pContainer->numberOfPairs + 1))
+    );
+    
+    // Create the new Key-Value Pair
+    *(pContainer->ppKeyValuePairs + pContainer->numberOfPairs) = (
+        createKeyValuePair(pKey, pValue, valueSize)
+    );
+    
+    // Increase the total number of pairs stored in the container
+    pContainer->numberOfPairs++;
+    
+    return KEY_VALUE_PAIR_OK;
+}
+
+KeyValuePair *keyValuePairContainer_get
+(
+    KVPContainer *pContainer,
+    const char *pKey
+)
+{
+    if (NULL == pContainer || NULL == pKey)
+        return NULL;
+    
+    for (int pairIndex = 0; pairIndex < pContainer->numberOfPairs; ++pairIndex)
+    {
+        KeyValuePair *pCurrentPair = *(pContainer->ppKeyValuePairs + pairIndex);
+        
+        if (!strncmp(pKey, pCurrentPair->pKey, strlen(pKey)))
+            return pCurrentPair;
+    }
+    
+    return NULL;
 }
