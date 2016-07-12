@@ -14,10 +14,10 @@ _BIN := ${_OUT}/bin
 TARGET := ${_BIN}/lib${NAME}.a
 
 # The path that the library archives should be copied to
-COPY_LIBRARY_ARCHIVES_TO := ${HOME}/code/SQLiteDatabaseHelperTest/Libraries/SQLiteDatabaseHelper/
+COPY_LIBRARY_ARCHIVES_TO := ${ROOT}/SampleProject/Libraries/SQLiteDatabaseHelper/
 
 # The path that the library headers should be copied to
-COPY_LIBRARY_HEADERS_TO := ${HOME}/code/SQLiteDatabaseHelperTest/Libraries/SQLiteDatabaseHelper/
+COPY_LIBRARY_HEADERS_TO := ${ROOT}/SampleProject/Libraries/SQLiteDatabaseHelper/
 
 MD := mkdir
 MD_FLAGS := -p
