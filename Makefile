@@ -62,6 +62,7 @@ clean:
 objects: ${OBJS} ${LIB_OBJS}
 
 archive: ${SRC_HEADERS} ${LIB_HEADERS}
+	@echo "[BUILD] [ARCHIVE] Generating archive file out of library objects"
 	@${AR} ${AR_FLAGS} ${TARGET} $(shell find ${_OBJ} -type f -name "*.o")
 
 ${_OBJ}/srcs/%.o: ${_SRC}/%.c
