@@ -49,14 +49,15 @@ int keyValuePairContainer_add
     KVPContainer *pContainer,
     const char *pKey,
     void *pValue,
-    size_t valueSize
+    size_t valueSize,
+    void (*freeValue)(void *)
 )
 {
     if (NULL == pContainer || NULL == pKey || NULL == pValue)
         return KEY_VALUE_PAIR_ERROR;
     
     // Check to make sure a pair with the specified key doesn't already exist
-    if (pContainer->hasKey(pContainer, pKey))
+    if (true == pContainer->hasKey(pContainer, pKey))
         return KEY_VALUE_PAIR_EXISTS;
     
     // Increase the size of the array of Key-Value Pairs
@@ -67,7 +68,7 @@ int keyValuePairContainer_add
     
     // Create the new Key-Value Pair
     *(pContainer->ppKeyValuePairs + pContainer->numberOfPairs) = (
-        createKeyValuePair(pKey, pValue, valueSize)
+        createKeyValuePair(pKey, pValue, valueSize, freeValue)
     );
     
     // Increase the total number of pairs stored in the container
@@ -113,7 +114,7 @@ char **keyValuePairContainer_list
     
     for (int pairIndex = 0; pairIndex < pContainer->numberOfPairs; ++pairIndex)
     {
-        KeyValuePair *pCurrentPair = *(pContainer->ppKeyValuePairs);
+        KeyValuePair *pCurrentPair = *(pContainer->ppKeyValuePairs + pairIndex);
         
         *(ppPairKeys + pairIndex) = (char *) pCurrentPair->pKey;
     }

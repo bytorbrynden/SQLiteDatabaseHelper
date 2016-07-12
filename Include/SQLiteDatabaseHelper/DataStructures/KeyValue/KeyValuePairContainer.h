@@ -42,7 +42,8 @@ struct keyValuePairContainer  // Definition
         struct keyValuePairContainer *pContainer,
         const char *pKey,
         void *pValue,
-        size_t valueSize
+        size_t valueSize,
+        void (*freeValue)(void *)
     );
     
     KeyValuePair *(*get)
@@ -80,7 +81,8 @@ int keyValuePairContainer_add
     KVPContainer *pContainer,
     const char *pKey, // IN: The Key-Value Pair's key
     void *pValue,     // IN: Pointer to the Key-Value Pair's value
-    size_t valueSize  // IN: The size (in bytes) of the Key-Value Pair's value
+    size_t valueSize, // IN: The size (in bytes) of the Key-Value Pair's value
+    void (*freeValue)(void *)
 );
 
 KeyValuePair *keyValuePairContainer_get

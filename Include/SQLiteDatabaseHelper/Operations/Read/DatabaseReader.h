@@ -57,6 +57,11 @@ struct databaseReader  // Definition
         const char *pQueryName
     );
     
+    void (*executeQueries)
+    (
+        struct databaseReader *pDatabaseReader
+    );
+    
     int (*setResultColumns)
     (
         struct databaseReader *pDatabaseReader,
@@ -101,6 +106,16 @@ int databaseReader_executeQuery
 (
     DatabaseReader *pDatabaseReader,
     const char *pQueryName
+);
+
+void databaseReader_executeQueries
+(
+    DatabaseReader *pDatabaseReader
+);
+
+void databaseReader_queryResultDestroyer
+(
+    void *pQueryResult
 );
 
 int databaseReader_setResultColumns

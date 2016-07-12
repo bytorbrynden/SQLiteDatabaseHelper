@@ -24,6 +24,7 @@ DatabaseReader *createDatabaseReader
     
     pReader->registerQuery    = databaseReader_registerQuery;
     pReader->executeQuery     = databaseReader_executeQuery;
+    pReader->executeQueries   = databaseReader_executeQueries;
     pReader->setResultColumns = databaseReader_setResultColumns;
     pReader->setResultRows    = databaseReader_setResultRows;
     pReader->getQueryResults  = databaseReader_getQueryResults;
@@ -46,29 +47,7 @@ void destroyDatabaseReader
         destroyKVPContainer(pDatabaseReader->pRegisteredQueries);
     
     if (NULL != pDatabaseReader->pQueryResults)
-    {
-        char **ppQueryResults = pDatabaseReader->pQueryResults->list(
-            pDatabaseReader->pQueryResults);
-        
-        for (int i = 0; i < pDatabaseReader->pQueryResults->numberOfPairs; ++i)
-        {
-            KeyValuePair *pPair = pDatabaseReader->pQueryResults->get(
-                pDatabaseReader->pQueryResults, *(ppQueryResults + i));
-            
-            SQLiteQueryResult *pQueryResult = (
-                (SQLiteQueryResult *) pPair->pValue
-            );
-            
-            destroySQLiteQueryResult(pQueryResult);
-            
-            free(pPair);
-        }
-        
-        // destroyKVPContainer(pDatabaseReader->pQueryResults);
-        free(ppQueryResults);
-        free(pDatabaseReader->pQueryResults->ppKeyValuePairs);
-        free(pDatabaseReader->pQueryResults);
-    }
+        destroyKVPContainer(pDatabaseReader->pQueryResults);
     
     free(pDatabaseReader);
 }
@@ -87,7 +66,7 @@ int databaseReader_registerQuery
     
     pairAddStatus = pDatabaseReader->pRegisteredQueries->add(
         pDatabaseReader->pRegisteredQueries, pQueryName, pQueryStatement,
-        (sizeof(char) * (strlen(pQueryStatement) + 1))
+        (sizeof(char) * (strlen(pQueryStatement) + 1)), NULL
     );
     
     if (KEY_VALUE_PAIR_EXISTS == pairAddStatus)
@@ -138,9 +117,9 @@ int databaseReader_executeQuery
             {
                 pDatabaseReader->pQueryResults->add(
                     pDatabaseReader->pQueryResults, pQueryName, pQueryResult,
-                    sizeof(SQLiteQueryResult));
-                
-                free(pQueryResult);
+                    sizeof(SQLiteQueryResult),
+                    databaseReader_queryResultDestroyer
+                );
             }
         }
         
@@ -148,6 +127,41 @@ int databaseReader_executeQuery
     }
     
     return DATABASE_READER_OK;
+}
+
+void databaseReader_executeQueries
+(
+    DatabaseReader *pDatabaseReader
+)
+{
+    char **ppQueryNames = NULL;
+    
+    if (NULL == pDatabaseReader)
+        return;
+    
+    ppQueryNames = pDatabaseReader->pRegisteredQueries->list(
+        pDatabaseReader->pRegisteredQueries);
+    
+    for (int queryIndex = 0; queryIndex <
+        pDatabaseReader->pRegisteredQueries->numberOfPairs; ++queryIndex)
+    {
+        pDatabaseReader->executeQuery(pDatabaseReader,
+            *(ppQueryNames + queryIndex));
+    }
+    
+    free(ppQueryNames);
+}
+
+void databaseReader_queryResultDestroyer
+(
+    void *pQueryResult
+)
+{
+    if (NULL == pQueryResult)
+        return;
+    
+    destroySQLiteQueryResult((SQLiteQueryResult *) pQueryResult);
+    free(pQueryResult);
 }
 
 int databaseReader_setResultColumns

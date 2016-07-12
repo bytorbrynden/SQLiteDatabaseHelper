@@ -67,8 +67,6 @@ void destroySQLiteQueryResult
         
         free(pQueryResult->pppRowValues);
     }
-    
-    free(pQueryResult);
 }
 
 void sqliteQueryResult_registerColumn

@@ -8,7 +8,8 @@ KeyValuePair *createKeyValuePair
 (
     const char *pKey,
     void *pValue,
-    size_t valueSize
+    size_t valueSize,
+    void (*freeValue)(void *)
 )
 {
     KeyValuePair *pNewPair = NULL;
@@ -17,14 +18,17 @@ KeyValuePair *createKeyValuePair
     //  create a new instance of the 'KeyValuePair' struct. Instead, we'll
     //  return from the function early.
     if (NULL == pKey || NULL == pValue)
-        return pNewPair;
+        return NULL;
     
     pNewPair = (KeyValuePair *) malloc(sizeof(KeyValuePair));
     
     pNewPair->pKey   = pKey;
-    pNewPair->pValue = malloc(valueSize);
+    // pNewPair->pValue = malloc(valueSize);
+    pNewPair->pValue = pValue;
     
-    memcpy(((unsigned char *) pNewPair->pValue), pValue, valueSize);
+    pNewPair->freeValue = freeValue;
+    
+    // memcpy(((unsigned char *) pNewPair->pValue), pValue, valueSize);
     
     return pNewPair;
 }
@@ -40,7 +44,12 @@ void destroyKeyValuePair
         return;
     
     if (NULL != pPair->pValue)
-        free(pPair->pValue);
+    {
+        if (NULL != pPair->freeValue)
+            pPair->freeValue(pPair->pValue);
+        // else
+        //     free(pPair->pValue);
+    }
     
     free(pPair);
 }

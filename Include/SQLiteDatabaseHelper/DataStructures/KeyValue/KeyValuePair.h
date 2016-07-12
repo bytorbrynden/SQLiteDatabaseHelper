@@ -31,6 +31,11 @@ struct keyValuePair  // Definition
 {
     const char *pKey;
     void *pValue;
+    
+    void (*freeValue)
+    (
+        void *pValue
+    );
 };
 
 // As was done with the 'keyValuePairContainer' struct
@@ -46,7 +51,8 @@ KeyValuePair *createKeyValuePair
 (
     const char *pKey, // IN: The key for the new pair.
     void *pValue,     // IN: A pointer to the value for the new pair.
-    size_t valueSize  // IN: The size of the pair's value.
+    size_t valueSize, // IN: The size of the pair's value.
+    void (*freeValue)(void *)
 );
 
 // The 'destroyKeyValuePair()' function acts as the destructor for the
