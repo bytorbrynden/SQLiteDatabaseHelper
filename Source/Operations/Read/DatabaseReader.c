@@ -2,7 +2,7 @@
 // SQLiteDatabaseHelper
 // Source/Operations/Read/DatabaseReader.c
 //
-#include <SQLiteDatabaseHelper/Operations/Read/DatabaseReader.h>
+#include "Operations/Read/DatabaseReader.h"
 
 DatabaseReader *createDatabaseReader
 (

@@ -9,8 +9,8 @@
 
 #include <sqlite3/sqlite3.h>
 
-#include <SQLiteDatabaseHelper/DataStructures/KeyValue/KeyValuePairContainer.h>
-#include <SQLiteDatabaseHelper/DataStructures/SQLiteQueryResult/SQLiteQueryResult.h>
+#include "DataStructures/KeyValue/KeyValuePairContainer.h"
+#include "DataStructures/SQLiteQueryResult/SQLiteQueryResult.h"
 
 #define DATABASE_READER_OK              0x00
 #define DATABASE_READER_ERROR           0x01

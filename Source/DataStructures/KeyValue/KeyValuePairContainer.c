@@ -2,7 +2,7 @@
 // SQLiteDatabaseHelper
 // Source/DataStructures/KeyValue/KeyValuePairContainer.c
 //
-#include <SQLiteDatabaseHelper/DataStructures/KeyValue/KeyValuePairContainer.h>
+#include "DataStructures/KeyValue/KeyValuePairContainer.h"
 
 KVPContainer *createKVPContainer()
 {

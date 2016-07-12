@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#include <SQLiteDatabaseHelper/DataStructures/KeyValue/KeyValuePair.h>
+#include "DataStructures/KeyValue/KeyValuePair.h"
 
 #define KEY_VALUE_PAIR_OK        0x0
 #define KEY_VALUE_PAIR_ERROR     0x1

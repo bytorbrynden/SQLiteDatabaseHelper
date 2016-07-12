@@ -2,7 +2,7 @@
 // SQLiteDatabaseHelper
 // Source/DataStructures/SQLiteQueryResult/SQLiteQueryResult.c
 //
-#include <SQLiteDatabaseHelper/DataStructures/SQLiteQueryResult/SQLiteQueryResult.h>
+#include "DataStructures/SQLiteQueryResult/SQLiteQueryResult.h"
 
 SQLiteQueryResult *createSQLiteQueryResult()
 {

@@ -2,7 +2,7 @@
 // SQLiteDatabaseHelper
 // Source/DataStructures/KeyValue/KeyValuePair.c
 //
-#include <SQLiteDatabaseHelper/DataStructures/KeyValue/KeyValuePair.h>
+#include "DataStructures/KeyValue/KeyValuePair.h"
 
 KeyValuePair *createKeyValuePair
 (

@@ -42,7 +42,7 @@ LIB_OBJS := $(patsubst ${_LIB}/%.c, ${_OBJ}/libs/%.o, ${LIB_SRCS})
 
 HEADERS := $(shell find ${ROOT} -type f -name "*.h")
 
-SRC_HEADERS := $(patsubst ${_INC}/SQLiteDatabaseHelper/%.h, ${_BIN}/Include/%.h, ${HEADERS})
+SRC_HEADERS := $(patsubst ${_INC}/%.h, ${_BIN}/Include/%.h, ${HEADERS})
 LIB_HEADERS := $(patsubst ${_LIB}/%.h, ${_BIN}/Include/%.h, ${HEADERS})
 
 .PHONY: all
@@ -74,7 +74,7 @@ ${_OBJ}/libs/%.o: ${_LIB}/%.c
 	@${MD} ${MD_FLAGS} $(dir $@)
 	@${CC} ${CC_FLAGS} $^ -o $@
 
-${_BIN}/Include/%.h: ${_INC}/SQLiteDatabaseHelper/%.h
+${_BIN}/Include/%.h: ${_INC}/%.h
 	@echo "[BUILD] [COPY] Copying $(notdir $^) header file to bin directory"
 	@${MD} ${MD_FLAGS} $(dir $@)
 	@${CP} ${CP_FLAGS} $^ $@
