@@ -5,8 +5,6 @@
 #ifndef __SQLITEDATABASEHELPER_H__
 #define __SQLITEDATABASEHELPER_H__
 
-#include <stdio.h>
-
-#include <sqlite3.h>
+#include <SQLiteDatabaseHelper/Operations/Read/DatabaseReader.h>
 
 #endif
