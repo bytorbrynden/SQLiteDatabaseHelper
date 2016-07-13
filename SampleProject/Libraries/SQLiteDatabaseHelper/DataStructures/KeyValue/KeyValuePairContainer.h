@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#include "SQLiteDatabaseHelperMacros.h"
 #include "DataStructures/KeyValue/KeyValuePair.h"
 
 #define KEY_VALUE_PAIR_OK        0x0
@@ -69,6 +70,8 @@ struct keyValuePairContainer  // Definition
 //  allowing us to declare instances of the struct without having to type as much.
 typedef struct keyValuePairContainer KVPContainer;
 
+C_FUNC_BLOCK_START // Begin C-linkage block
+
 KVPContainer *createKVPContainer();
 
 void destroyKVPContainer
@@ -101,5 +104,7 @@ bool keyValuePairContainer_hasKey
     KVPContainer *pContainer,
     const char *pKey
 );
+
+C_FUNC_BLOCK_END // End C-linkage block
 
 #endif

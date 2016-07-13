@@ -10,6 +10,8 @@
 #include <string.h>
 #include <stdbool.h>
 
+#include "SQLiteDatabaseHelperMacros.h"
+
 struct sqliteQueryResult; // Forward-Declaration
 struct sqliteQueryResult  // Definition
 {
@@ -62,6 +64,8 @@ struct sqliteQueryResult  // Definition
 
 typedef struct sqliteQueryResult SQLiteQueryResult;
 
+C_FUNC_BLOCK_START // Begin C-linkage block
+
 SQLiteQueryResult *createSQLiteQueryResult();
 
 void destroySQLiteQueryResult
@@ -107,5 +111,7 @@ char *sqliteQueryResult_getColumnValue
     int rowIndex,
     char *pColumnName
 );
+
+C_FUNC_BLOCK_END // End C-linkage block
 
 #endif

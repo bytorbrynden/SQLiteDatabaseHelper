@@ -9,6 +9,8 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include "SQLiteDatabaseHelperMacros.h"
+
 // A Key-Value Pair is often described as follows:
 //      "A key-value pair (KVP) is a set of two linked data items: a key, which
 //      is a unique identifier for some item of data, and the value, which is
@@ -44,6 +46,8 @@ struct keyValuePair  // Definition
 //  new instance of the 'keyValuePair' struct.
 typedef struct keyValuePair KeyValuePair;
 
+C_FUNC_BLOCK_START // Begin C-linkage block
+
 // The 'createKeyValuePair()' function acts as a constructor for the
 //  'keyValuePair' struct. It is tasked with allocating any memory that is
 //  required for a Key-Value Pair.
@@ -62,5 +66,7 @@ void destroyKeyValuePair
 (
     KeyValuePair *pPair // IN: A pointer to the Key-Value pair to be destroyed.
 );
+
+C_FUNC_BLOCK_END // End C-linkage block
 
 #endif

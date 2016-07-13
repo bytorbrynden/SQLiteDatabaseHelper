@@ -9,6 +9,7 @@
 
 #include <sqlite3/sqlite3.h>
 
+#include "SQLiteDatabaseHelperMacros.h"
 #include "DataStructures/KeyValue/KeyValuePairContainer.h"
 #include "DataStructures/SQLiteQueryResult/SQLiteQueryResult.h"
 
@@ -85,6 +86,8 @@ struct databaseReader  // Definition
 
 typedef struct databaseReader DatabaseReader;
 
+C_FUNC_BLOCK_START // Begin C-linkage block
+
 DatabaseReader *createDatabaseReader
 (
     const char *pDatabaseFilePath
@@ -137,5 +140,7 @@ SQLiteQueryResult *databaseReader_getQueryResults
     DatabaseReader *pDatabaseReader,
     const char *pQueryName
 );
+
+C_FUNC_BLOCK_END // End C-linkage block
 
 #endif
