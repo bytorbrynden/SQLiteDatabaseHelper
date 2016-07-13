@@ -72,14 +72,14 @@ typedef struct keyValuePairContainer KVPContainer;
 
 C_FUNC_BLOCK_START // Begin C-linkage block
 
-KVPContainer *createKVPContainer();
+EXPORT_FUNC KVPContainer *createKVPContainer();
 
-void destroyKVPContainer
+EXPORT_FUNC void destroyKVPContainer
 (
     KVPContainer *pContainer // IN: The Key-Value Pair container to be destroyed
 );
 
-int keyValuePairContainer_add
+EXPORT_FUNC int keyValuePairContainer_add
 (
     KVPContainer *pContainer,
     const char *pKey, // IN: The Key-Value Pair's key
@@ -88,18 +88,18 @@ int keyValuePairContainer_add
     void (*freeValue)(void *)
 );
 
-KeyValuePair *keyValuePairContainer_get
+EXPORT_FUNC KeyValuePair *keyValuePairContainer_get
 (
     KVPContainer *pContainer,
     const char *pKey // IN: The key of the desired Key-Value Pair
 );
 
-char **keyValuePairContainer_list
+EXPORT_FUNC char **keyValuePairContainer_list
 (
     KVPContainer *pContainer
 );
 
-bool keyValuePairContainer_hasKey
+EXPORT_FUNC bool keyValuePairContainer_hasKey
 (
     KVPContainer *pContainer,
     const char *pKey

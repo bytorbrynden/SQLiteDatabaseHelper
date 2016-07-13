@@ -66,26 +66,26 @@ typedef struct sqliteQueryResult SQLiteQueryResult;
 
 C_FUNC_BLOCK_START // Begin C-linkage block
 
-SQLiteQueryResult *createSQLiteQueryResult();
+EXPORT_FUNC SQLiteQueryResult *createSQLiteQueryResult();
 
-void destroySQLiteQueryResult
+EXPORT_FUNC void destroySQLiteQueryResult
 (
     SQLiteQueryResult *pQueryResult
 );
 
-void sqliteQueryResult_registerColumn
+EXPORT_FUNC void sqliteQueryResult_registerColumn
 (
     SQLiteQueryResult *pQueryResult,
     int sqliteType,
     char *pColumnName
 );
 
-void sqliteQueryResult_allocateRow
+EXPORT_FUNC void sqliteQueryResult_allocateRow
 (
     SQLiteQueryResult *pQueryResult
 );
 
-void sqliteQueryResult_setRowColumnValue
+EXPORT_FUNC void sqliteQueryResult_setRowColumnValue
 (
     SQLiteQueryResult *pQueryResult,
     int rowIndex,
@@ -93,19 +93,19 @@ void sqliteQueryResult_setRowColumnValue
     char *pValue
 );
 
-int sqliteQueryResult_getColumnIndex
+EXPORT_FUNC int sqliteQueryResult_getColumnIndex
 (
     SQLiteQueryResult *pQueryResult,
     char *pColumnName
 );
 
-char *sqliteQueryResult_getColumnName
+EXPORT_FUNC char *sqliteQueryResult_getColumnName
 (
     SQLiteQueryResult *pQueryResult,
     int columnIndex
 );
 
-char *sqliteQueryResult_getColumnValue
+EXPORT_FUNC char *sqliteQueryResult_getColumnValue
 (
     SQLiteQueryResult *pQueryResult,
     int rowIndex,

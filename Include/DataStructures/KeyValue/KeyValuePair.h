@@ -51,7 +51,7 @@ C_FUNC_BLOCK_START // Begin C-linkage block
 // The 'createKeyValuePair()' function acts as a constructor for the
 //  'keyValuePair' struct. It is tasked with allocating any memory that is
 //  required for a Key-Value Pair.
-KeyValuePair *createKeyValuePair
+EXPORT_FUNC KeyValuePair *createKeyValuePair
 (
     const char *pKey, // IN: The key for the new pair.
     void *pValue,     // IN: A pointer to the value for the new pair.
@@ -62,7 +62,7 @@ KeyValuePair *createKeyValuePair
 // The 'destroyKeyValuePair()' function acts as the destructor for the
 //  'keyValuePair' struct. It attempts to deallocate all of the memory that was
 //  allocated for use with the Key-Value pair.
-void destroyKeyValuePair
+EXPORT_FUNC void destroyKeyValuePair
 (
     KeyValuePair *pPair // IN: A pointer to the Key-Value pair to be destroyed.
 );

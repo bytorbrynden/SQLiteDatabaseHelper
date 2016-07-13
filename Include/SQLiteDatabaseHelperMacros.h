@@ -15,4 +15,10 @@
 # define C_FUNC_BLOCK_END
 #endif
 
+#if defined(_WIN32) || defined(_WIN64)
+# define EXPORT_FUNC __declspec(dllexport)
+#else
+# define EXPORT_FUNC
+#endif
+
 #endif

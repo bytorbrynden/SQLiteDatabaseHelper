@@ -88,54 +88,54 @@ typedef struct databaseReader DatabaseReader;
 
 C_FUNC_BLOCK_START // Begin C-linkage block
 
-DatabaseReader *createDatabaseReader
+EXPORT_FUNC DatabaseReader *createDatabaseReader
 (
     const char *pDatabaseFilePath
 );
 
-void destroyDatabaseReader
+EXPORT_FUNC void destroyDatabaseReader
 (
     DatabaseReader *pDatabaseReader
 );
 
-int databaseReader_registerQuery
+EXPORT_FUNC int databaseReader_registerQuery
 (
     DatabaseReader *pDatabaseReader,
     const char *pQueryName,
     char *pQueryStatement
 );
 
-int databaseReader_executeQuery
+EXPORT_FUNC int databaseReader_executeQuery
 (
     DatabaseReader *pDatabaseReader,
     const char *pQueryName
 );
 
-void databaseReader_executeQueries
+EXPORT_FUNC void databaseReader_executeQueries
 (
     DatabaseReader *pDatabaseReader
 );
 
-void databaseReader_queryResultDestroyer
+EXPORT_FUNC void databaseReader_queryResultDestroyer
 (
     void *pQueryResult
 );
 
-int databaseReader_setResultColumns
+EXPORT_FUNC int databaseReader_setResultColumns
 (
     DatabaseReader *pDatabaseReader,
     sqlite3_stmt *pSQLStatement,
     SQLiteQueryResult *pQueryResult
 );
 
-int databaseReader_setResultRows
+EXPORT_FUNC int databaseReader_setResultRows
 (
     DatabaseReader *pDatabaseReader,
     sqlite3_stmt *pSQLStatement,
     SQLiteQueryResult *pQueryResult
 );
 
-SQLiteQueryResult *databaseReader_getQueryResults
+EXPORT_FUNC SQLiteQueryResult *databaseReader_getQueryResults
 (
     DatabaseReader *pDatabaseReader,
     const char *pQueryName
