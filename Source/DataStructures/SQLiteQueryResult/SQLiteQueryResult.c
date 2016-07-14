@@ -21,6 +21,8 @@ SQLiteQueryResult *createSQLiteQueryResult()
     pQueryResult->getColumnIndex    = sqliteQueryResult_getColumnIndex;
     pQueryResult->getColumnName     = sqliteQueryResult_getColumnName;
     pQueryResult->getColumnValue    = sqliteQueryResult_getColumnValue;
+    pQueryResult->hasRow            = sqliteQueryResult_hasRow;
+    pQueryResult->hasColumn         = sqliteQueryResult_hasColumn;
     
     return pQueryResult;
 }
@@ -210,4 +212,36 @@ char *sqliteQueryResult_getColumnValue
         return NULL;
     
     return *(*(pQueryResult->pppRowValues + rowIndex) + columnIndex);
+}
+
+bool sqliteQueryResult_hasRow
+(
+    SQLiteQueryResult *pQueryResult,
+    int rowIndex
+)
+{
+    if (NULL == pQueryResult)
+        return false;
+    
+    return (0 <= rowIndex && (pQueryResult->rowCount - 1) >= rowIndex);
+}
+
+bool sqliteQueryResult_hasColumn
+(
+    SQLiteQueryResult *pQueryResult,
+    char *pColumnName
+)
+{
+    if (NULL == pQueryResult || NULL == pColumnName)
+        return false;
+    
+    for (int colIndex = 0; colIndex < pQueryResult->colCount; ++colIndex)
+    {
+        char *pCurrentColumn = *(pQueryResult->ppColumnNames + colIndex);
+        
+        if (!strncmp(pColumnName, pCurrentColumn, strlen(pColumnName)))
+            return true;
+    }
+    
+    return false;
 }

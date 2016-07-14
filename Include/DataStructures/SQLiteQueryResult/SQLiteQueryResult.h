@@ -60,6 +60,18 @@ struct sqliteQueryResult  // Definition
         int rowIndex,
         char *pColumnName
     );
+    
+    bool (*hasRow)
+    (
+        struct sqliteQueryResult *pQueryResult,
+        int rowIndex
+    );
+    
+    bool (*hasColumn)
+    (
+        struct sqliteQueryResult *pQueryResult,
+        char *pColumnName
+    );
 };
 
 typedef struct sqliteQueryResult SQLiteQueryResult;
@@ -109,6 +121,18 @@ EXPORT_FUNC char *sqliteQueryResult_getColumnValue
 (
     SQLiteQueryResult *pQueryResult,
     int rowIndex,
+    char *pColumnName
+);
+
+EXPORT_FUNC bool sqliteQueryResult_hasRow
+(
+    SQLiteQueryResult *pQueryResult,
+    int rowIndex
+);
+
+EXPORT_FUNC bool sqliteQueryResult_hasColumn
+(
+    SQLiteQueryResult *pQueryResult,
     char *pColumnName
 );
 
