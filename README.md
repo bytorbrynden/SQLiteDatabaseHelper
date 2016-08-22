@@ -30,3 +30,6 @@ everything finishes compiling, the library files will be copied to the
 directories that you specified.
 
 If you encounter any problems during compilation, please [open a new issue](https://github.com/Gigabyte-Giant/SQLiteDatabaseHelper/issues/new).
+
+## License
+This project is released under an [MIT License](http://choosealicense.com/licenses/mit/). You can view the full license text, [here](./LICENSE.txt).
